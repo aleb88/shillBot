@@ -151,4 +151,12 @@ class BasicUserParseWorker(object):
         :return:
         """
         links = list(set(links))
+      
         [self.to_crawl.append(item) for item in links if item not in self.crawled and self.cur_links < self.max_links]
+        
+        #links1 = []
+        #links1.extend(links)
+        #[self.to_crawl.append(item) for item in links1 if item not in self.crawled and self.cur_links < self.max_links]
+        #for item in links:
+        #print(links)
+        #print(self.crawled)

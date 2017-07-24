@@ -24,26 +24,31 @@ class MothershipServer(object):
         self.sock.bind((self.host, self.port))
 
     def run(self):
-
+       
         print('Starting Mothership.')
 
         self.sock.listen(5)
         print('Mother is listening...')
+   
         while True:
             worker, address = self.sock.accept()
-            worker.settimeout(60)
+            worker.settimeout(6)
             print('Connection Received: %s' % str(address))
-            threading.Thread(target=self.handle_worker_contact, args=(worker, address)).start()
+            
+            threading.Thread(target=self.handle_worker_contact, args=(worker, address), daemon = True).start()
 
     def handle_worker_contact(self, worker, address):
         while True:
             try:
                 data = worker.recv(self.buff_size)
+                
                 if data:
                     json_data = json.loads(data)
                     print('%s' % json_data)
                 else:
                     raise ValueError('No Value Given')
+                   
+                    
             except:
                 worker.close()
                 return False
