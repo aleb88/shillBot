@@ -4,7 +4,7 @@ import codecs
 import os
 
 from workers.basic_worker import *
-
+from settings import *
 
 class TestWorkerBasic(unittest.TestCase):
 
