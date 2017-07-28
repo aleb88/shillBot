@@ -50,7 +50,7 @@ class TestWorkerBasic(unittest.TestCase):
 
         self.assertEqual(len_to_crawl_after, len_to_crawl_before)
 
-    def test_worker_add_links_in_crawled(self):
+    def test_worker_add_links_in_crawled1(self): #test whether add_links does not allow adding duplicate links   
 
         worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
         
@@ -59,6 +59,18 @@ class TestWorkerBasic(unittest.TestCase):
         len_to_crawl_after = len(worker.to_crawl)
 
         self.assertEqual(len_to_crawl_after, len_to_crawl_before)
+
+    
+    def test_worker_add_links_in_crawled2(self):#test whether add_links will add two distinct links
+
+        worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
+        
+        len_to_crawl_before = len(worker.to_crawl)
+        worker.add_links(["https://www.reddit.com/user/KennyEmmy"])
+        len_to_crawl_after = len(worker.to_crawl)
+
+        self.assertGreater(len_to_crawl_after, len_to_crawl_before)
+
 
 
     def test_worker_run(self):
