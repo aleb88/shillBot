@@ -3,7 +3,7 @@ import unittest
 import codecs
 import os
 
-from workers.basic_worker import BasicUserParseWorker
+from workers.basic_worker import *
 
 
 class TestWorkerBasic(unittest.TestCase):
@@ -51,9 +51,9 @@ class TestWorkerBasic(unittest.TestCase):
         self.assertEqual(len_to_crawl_after, len_to_crawl_before)
 
     def test_worker_add_links_in_crawled(self):
-        worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
-        worker.crawled = []
 
+        worker = BasicUserParseWorker("https://www.reddit.com/user/Chrikelnel")
+        
         len_to_crawl_before = len(worker.to_crawl)
         worker.add_links(["https://www.reddit.com/user/Chrikelnel"])
         len_to_crawl_after = len(worker.to_crawl)
@@ -61,6 +61,14 @@ class TestWorkerBasic(unittest.TestCase):
         self.assertEqual(len_to_crawl_after, len_to_crawl_before)
 
 
+    def test_worker_run(self):
+        worker = BasicUserParseWorker("https://www.reddit.com/user/Cthsdf")
+        self.assertRaises(WorkerException, worker.run)
+       # self.assertRaises(IOError, worker.run)
+
+
+if __name__ == '__main__':
+    unittest.main()
 
 
 
